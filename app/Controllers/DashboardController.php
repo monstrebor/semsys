@@ -11,6 +11,6 @@ class DashboardController extends Controller
             exit;
         }
 
-        $this->view("dashboard");
+        $this->view("dashboard", ['title' => 'Dashboard | SEMSYS']);
     }
 }

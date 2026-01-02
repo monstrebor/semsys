@@ -20,7 +20,9 @@ class AuthController extends Controller
             $_SESSION['error'] = "Invalid credentials";
         }
 
-        $this->view("auth/login");
+        $this->view('auth/login', [
+            'title' => 'Login | SEMSYS'
+        ]);
     }
 
     public function register()
@@ -38,6 +40,8 @@ class AuthController extends Controller
             exit;
         }
 
-        $this->view("auth/register");
+        $this->view('auth/register', [
+            'title' => 'Register | SEMSYS'
+        ]);
     }
 }

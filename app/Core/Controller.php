@@ -2,9 +2,8 @@
 
 abstract class Controller
 {
-    protected function view($path, $data = [])
+    protected function view($view, $data = [])
     {
-        extract($data);
-        require_once "../views/{$path}.php";
+        View::render($view, $data);
     }
 }

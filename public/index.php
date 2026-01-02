@@ -1,7 +1,11 @@
 <?php
 session_start();
 
+//classes
+require_once "../app/Core/View.php"; 
 require_once "../app/Core/Auth.php";
+
+//controllers
 require_once "../app/Controllers/AuthController.php";
 require_once "../app/Controllers/DashboardController.php";
 
@@ -10,7 +14,7 @@ $url = $_GET['url'] ?? 'home';
 switch ($url) {
 
     case 'home':
-        require_once "../views/home.php";
+        View::render("home", ['title' => 'Welcome | SEMSYS']);
         break;
 
     case 'login':
