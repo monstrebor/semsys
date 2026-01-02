@@ -1,0 +1,36 @@
+body {
+    padding-top: 70px; 
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+section {
+    background: linear-gradient(
+        135deg,
+        #f8f9fa,
+        #e9ecef
+    );
+}
+
+.bg-image1 {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.icon1 {
+    display: block;
+    background-image: url("../images/icon.png");
+    width: 80px;  
+    height: 80px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
