@@ -2,7 +2,7 @@
 session_start();
 
 //classes
-require_once "../app/Core/View.php"; 
+require_once "../app/Core/View.php";
 require_once "../app/Core/Auth.php";
 
 //controllers
@@ -30,9 +30,16 @@ switch ($url) {
         break;
 
     case 'logout':
-        Auth::logout();
+        (new AuthController)->logout();
+        $message = "You have been logged out due to inactivity.";
+        View::render("callback", [
+            'title'   => 'Session Expired | SEMSYS',
+            'message' => $message
+        ]);
         break;
 
     default:
-        echo "404 Page Not Found";
+        View::render("error", ['title' => '404 Not Found | SEMSYS']);
+        break;
+        
 }

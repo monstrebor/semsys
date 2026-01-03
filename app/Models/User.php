@@ -5,14 +5,13 @@ class User extends Database
 {
     public function register($name, $email, $password)
     {
-        //hashing the password
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        //statement to prevent SQL injection
         $stmt = $this->conn->prepare(
-            "INSERT INTO users (name, email, password) VALUES (?, ?, ?)"
+            "INSERT INTO users (name, email, password, isNew, isAdmin) VALUES (?, ?, ?, ?, ?)"
         );
-        return $stmt->execute([$name, $email, $hash]);
+
+        return $stmt->execute([$name, $email, $hash, 1, 0]);
     }
 
     public function login($email, $password)

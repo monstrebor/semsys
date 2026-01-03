@@ -1,6 +1,6 @@
 <section class="min-vh-100 d-flex justify-content-center align-items-center bg-image1">
     <div class="col-md-5 col-lg-4">
-
+        <?php require_once __DIR__ . '/../partials/notif.php'; ?>
         <div class="card shadow border-0 rounded-4">
             <div class="card-header bg-primary text-white text-center py-4 rounded-top-4">
                 <h4 class="mb-0 fw-bold">Hello world!</h4>
@@ -11,32 +11,48 @@
 
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger alert-dismissible fade show">
-                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                        <?= $_SESSION['error'];
+                        unset($_SESSION['error']); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
-
                 <form method="POST">
                     <h1 class="text-center fw-bold">Register</h1>
+
                     <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control form-control-lg" required>
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control form-control-lg"
+                            value="<?= $_SESSION['old']['name'] ?? '' ?>"
+                            required>
+
+                        <?php if (isset($_SESSION['errors']['name'])): ?>
+                            <small class="text-danger"><?= $_SESSION['errors']['name'] ?></small>
+                        <?php endif; ?>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" name="email" class="form-control form-control-lg" required>
-                    </div>
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control form-control-lg"
+                            value="<?= $_SESSION['old']['email'] ?? '' ?>"
+                            required>
 
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control form-control-lg" required>
+                        <?php if (isset($_SESSION['errors']['email'])): ?>
+                            <small class="text-danger"><?= $_SESSION['errors']['email'] ?></small>
+                        <?php endif; ?>
                     </div>
 
                     <div class="d-grid mt-4">
                         <button class="btn btn-primary btn-lg">Register</button>
                     </div>
                 </form>
+
+                <?php unset($_SESSION['old']); ?>
 
             </div>
 
