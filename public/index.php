@@ -41,5 +41,4 @@ switch ($url) {
     default:
         View::render("error", ['title' => '404 Not Found | SEMSYS']);
         break;
-        
 }

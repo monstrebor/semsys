@@ -44,7 +44,12 @@ class AuthController extends Controller
             unset($_SESSION['old']);
             $_SESSION['user'] = $user;
             $_SESSION['success'] = "Login successful!";
-            header("Location: index.php?url=dashboard");
+
+            if (!empty($user['isAdmin']) && $user['isAdmin'] == 1) {
+                header("Location: index.php?url=admin-dashboard");
+            } else {
+                header("Location: index.php?url=user-dashboard");
+            }
             exit;
         }
 

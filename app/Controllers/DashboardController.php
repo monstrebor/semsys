@@ -7,10 +7,21 @@ class DashboardController extends Controller
     public function index()
     {
         if (!Auth::check()) {
-            header("Location: login");
+            header("Location: index.php?url=login");
             exit;
         }
 
-        $this->view("dashboard", ['title' => 'Dashboard | SEMSYS']);
+        $user = $_SESSION['user'];
+
+        if (!empty($user['isAdmin']) && $user['isAdmin'] == 1) {
+            $this->view('admin/dashboard', [
+                'title' => 'Admin Dashboard | SEMSYS'
+            ]);
+            return;
+        }
+
+        $this->view('user/dashboard', [
+            'title' => 'Dashboard | SEMSYS'
+        ]);
     }
 }
