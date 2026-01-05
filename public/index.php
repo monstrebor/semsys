@@ -8,8 +8,14 @@ require_once "../app/Core/Auth.php";
 //controllers
 require_once "../app/Controllers/AuthController.php";
 require_once "../app/Controllers/DashboardController.php";
+require_once "../app/Controllers/UserController.php";
 
 $url = $_GET['url'] ?? 'home';
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 1800) {
+    header("Location: index.php?url=session-expired");
+    exit;
+}
+$_SESSION['last_activity'] = time();
 
 switch ($url) {
 
@@ -31,11 +37,18 @@ switch ($url) {
 
     case 'logout':
         (new AuthController)->logout();
-        $message = "You have been logged out due to inactivity.";
-        View::render("callback", [
-            'title'   => 'Session Expired | SEMSYS',
-            'message' => $message
-        ]);
+        break;
+
+    case 'session-expired':
+        (new AuthController)->sessionExpired();
+        break;
+
+    case 'user-index':
+        (new UserController)->index();
+        break;
+
+    case 'admin-users-create':
+        (new UserController)->create();
         break;
 
     default:

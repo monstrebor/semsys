@@ -3,7 +3,7 @@
 //models
 require_once "../app/Models/User.php";
 
-//class
+//classes
 require_once "../app/Core/Controller.php";
 require_once "../app/Core/Validator.php";
 require_once "../app/Core/Helpers.php";
@@ -44,12 +44,7 @@ class AuthController extends Controller
             unset($_SESSION['old']);
             $_SESSION['user'] = $user;
             $_SESSION['success'] = "Login successful!";
-
-            if (!empty($user['isAdmin']) && $user['isAdmin'] == 1) {
-                header("Location: index.php?url=admin-dashboard");
-            } else {
-                header("Location: index.php?url=user-dashboard");
-            }
+            header("Location: index.php?url=dashboard");
             exit;
         }
 
@@ -119,12 +114,30 @@ class AuthController extends Controller
 
     public function logout()
     {
-        session_start();
-        session_unset();
-        session_destroy();
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        unset($_SESSION['user']);
         $_SESSION['success'] = "You have successfully logged out.";
+        session_regenerate_id(true);
         header("Location: index.php?url=home");
         exit;
+    }
+
+
+    public function sessionExpired()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        session_unset();
+        session_destroy();
+
+        View::render("callback", [
+            'title'   => 'Session Expired | SEMSYS',
+            'message' => 'You have been logged out due to inactivity.'
+        ]);
     }
 }

@@ -13,12 +13,7 @@
 
 <div class="d-flex min-vh-100">
 
-    <!-- ADMIN SIDEBAR -->
-    <?php require_once __DIR__ . '/sidebar.php'; ?>
-
-    <!-- MAIN CONTENT -->
     <main class="flex-grow-1 p-4">
-        <?php require_once __DIR__ . '/../../partials/notif.php'; ?>
         <?php require_once __DIR__ . '/../../partials/navbar.php'; ?>
         <?php if (isset($content)) echo $content; ?>
     </main>

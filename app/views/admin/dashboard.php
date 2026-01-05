@@ -1,4 +1,9 @@
 <div class="d-flex min-vh-100">
+
+    <!-- SIDEBAR -->
+    <?php require_once __DIR__ . '/partials/sidebar.php'; ?>
+
+    <!-- MAIN CONTENT -->
     <main class="flex-grow-1 bg-light p-4">
         <div class="container-fluid">
             <div class="alert alert-success">

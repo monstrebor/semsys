@@ -12,7 +12,6 @@ class DashboardController extends Controller
         }
 
         $user = $_SESSION['user'];
-
         if (!empty($user['isAdmin']) && $user['isAdmin'] == 1) {
             $this->view('admin/dashboard', [
                 'title' => 'Admin Dashboard | SEMSYS'
