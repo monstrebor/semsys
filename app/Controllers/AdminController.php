@@ -11,12 +11,14 @@ require_once "../app/Core/Helpers.php";
 require_once "../app/Core/Mailer.php";
 require_once "../app/Core/EmailView.php";
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     public function index()
     {
+        Auth::requireAdmin();
+
         $userModel = new User();
-        $users = $userModel->all();
+        $users = $userModel->all($_SESSION['user']['id']);
 
         $this->view('admin/users/index', [
             'title' => 'Users Management | SEMSYS',
@@ -26,6 +28,8 @@ class UserController extends Controller
 
     public function create()
     {
+        Auth::requireAdmin();
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("Location: index.php?url=user-index");
             exit;

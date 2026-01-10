@@ -31,9 +31,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($users as $index => $user): ?>
+                                <?php $i = 1; ?>
+                                <?php foreach ($users as $user): ?>
+
+                                    <?php if ($user['id'] == $_SESSION['user']['id']) continue; ?>
+
                                     <tr>
-                                        <td><?= $index + 1 ?></td>
+                                        <td><?= $i++ ?></td>
                                         <td><?= htmlspecialchars($user['name']) ?></td>
                                         <td><?= htmlspecialchars($user['email']) ?></td>
                                         <td>
@@ -51,6 +55,7 @@
                                             <button class="btn btn-sm btn-outline-danger">Delete</button>
                                         </td>
                                     </tr>
+
                                 <?php endforeach; ?>
                             </tbody>
                         </table>

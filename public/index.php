@@ -8,14 +8,34 @@ require_once "../app/Core/Auth.php";
 //controllers
 require_once "../app/Controllers/AuthController.php";
 require_once "../app/Controllers/DashboardController.php";
-require_once "../app/Controllers/UserController.php";
+require_once "../app/Controllers/AdminController.php";
+
 
 $url = $_GET['url'] ?? 'home';
-if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > 1800) {
+
+$publicRoutes = [
+    'home',
+    'login',
+    'register',
+    'session-expired'
+];
+
+/**
+ * Session timeout check
+ */
+if (
+    !in_array($url, $publicRoutes) &&
+    isset($_SESSION['last_activity']) &&
+    time() - $_SESSION['last_activity'] > 1800
+) {
     header("Location: index.php?url=session-expired");
     exit;
 }
-$_SESSION['last_activity'] = time();
+
+// Update activity time only if logged in
+if (Auth::check()) {
+    $_SESSION['last_activity'] = time();
+}
 
 switch ($url) {
 
@@ -23,12 +43,20 @@ switch ($url) {
         View::render("home", ['title' => 'Welcome | SEMSYS']);
         break;
 
-    case 'login':
-        (new AuthController)->login();
-        break;
-
     case 'register':
         (new AuthController)->register();
+        break;
+
+    case 'set-password':
+        (new AuthController)->setPassword();
+        break;
+
+    case 'save-password':
+        (new AuthController)->savePassword();
+        break;
+
+    case 'login':
+        (new AuthController)->login();
         break;
 
     case 'dashboard':
@@ -44,11 +72,11 @@ switch ($url) {
         break;
 
     case 'user-index':
-        (new UserController)->index();
+        (new AdminController)->index();
         break;
 
     case 'admin-users-create':
-        (new UserController)->create();
+        (new AdminController)->create();
         break;
 
     default:

@@ -6,13 +6,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if (!Auth::check()) {
-            header("Location: index.php?url=login");
-            exit;
-        }
+        Auth::requireLogin();
 
-        $user = $_SESSION['user'];
-        if (!empty($user['isAdmin']) && $user['isAdmin'] == 1) {
+        if (Auth::isAdmin()) {
             $this->view('admin/dashboard', [
                 'title' => 'Admin Dashboard | SEMSYS'
             ]);
