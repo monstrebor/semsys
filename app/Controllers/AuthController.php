@@ -135,8 +135,14 @@ class AuthController extends Controller
             $userModel = new User();
             $user = $userModel->login($_POST['email'], $_POST['password']);
 
-            if (!$user) {
-                $_SESSION['error'] = "Invalid credentials.";
+            if ($user === 'inactive') {
+                $_SESSION['error'] = "Your account has been deactivated. Please contact the administrator.";
+                header("Location: index.php?url=login");
+                exit;
+            }
+
+            if ($user === false) {
+                $_SESSION['error'] = "Invalid email or password.";
                 header("Location: index.php?url=login");
                 exit;
             }

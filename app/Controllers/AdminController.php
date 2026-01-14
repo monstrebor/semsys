@@ -18,11 +18,14 @@ class AdminController extends Controller
         Auth::requireAdmin();
 
         $userModel = new User();
-        $users = $userModel->all($_SESSION['user']['id']);
+
+        $users        = $userModel->all($_SESSION['user']['id']);
+        $inactiveUsers = $userModel->allInactive();
 
         $this->view('admin/users/index', [
-            'title' => 'Users Management | SEMSYS',
-            'users' => $users
+            'title'         => 'Users Management | SEMSYS',
+            'users'         => $users,
+            'inactiveUsers' => $inactiveUsers
         ]);
     }
 
@@ -37,7 +40,7 @@ class AdminController extends Controller
 
         $name = $_POST['name'] ?? '';
         $email = $_POST['email'] ?? '';
-        $isAdmin = $_POST['isAdmin'] ?? '0';
+        $isAdmin = ($_POST['role'] === '1') ? 1 : 0;
 
         $plainPassword = Helpers::randomPassword(10);
 
@@ -66,6 +69,96 @@ class AdminController extends Controller
             $_SESSION['success'] = "User created successfully. Password sent via email.";
         }
 
+        header("Location: index.php?url=user-index");
+        exit;
+    }
+
+    public function update()
+    {
+        Auth::requireAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: index.php?url=user-index");
+            exit;
+        }
+
+        $id    = $_POST['id'] ?? null;
+        $name  = trim($_POST['name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $role  = isset($_POST['role']) ? (int) $_POST['role'] : 0;
+
+        if (!$id || !$name || !$email) {
+            $_SESSION['error'] = "All fields are required.";
+            header("Location: index.php?url=user-index");
+            exit;
+        }
+
+        if ($id == $_SESSION['user']['id']) {
+            $_SESSION['error'] = "You cannot edit your own account.";
+            header("Location: index.php?url=user-index");
+            exit;
+        }
+
+        $userModel = new User();
+
+        if (!$userModel->updateUser($id, $name, $email, $role)) {
+            $_SESSION['error'] = "Email already exists.";
+        } else {
+            $_SESSION['success'] = "User updated successfully.";
+        }
+
+        header("Location: index.php?url=user-index");
+        exit;
+    }
+
+    public function delete()
+    {
+        Auth::requireAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: index.php?url=user-index");
+            exit;
+        }
+
+        $id = $_POST['id'] ?? null;
+
+        if (!$id) {
+            $_SESSION['error'] = "Invalid request.";
+            header("Location: index.php?url=user-index");
+            exit;
+        }
+
+        if ($id == $_SESSION['user']['id']) {
+            $_SESSION['error'] = "You cannot deactivate your own account.";
+            header("Location: index.php?url=user-index");
+            exit;
+        }
+
+        $userModel = new User();
+
+        if ($userModel->softDelete($id)) {
+            $_SESSION['success'] = "User deactivated successfully.";
+        } else {
+            $_SESSION['error'] = "Failed to deactivate user.";
+        }
+
+        header("Location: index.php?url=user-index");
+        exit;
+    }
+
+    public function activate()
+    {
+        Auth::requireAdmin();
+
+        $id = $_POST['id'] ?? null;
+        if (!$id) {
+            header("Location: index.php?url=user-index");
+            exit;
+        }
+
+        (new User())->activate($id);
+
+        $_SESSION['success'] = "User account activated.";
         header("Location: index.php?url=user-index");
         exit;
     }

@@ -25,6 +25,8 @@
 
     <script src="/semsys/public/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/semsys/public/assets/js/scripts.js"></script>
+    <script src="/semsys/public/assets/js/editUserModal.js"></script>
+    <script src="/semsys/public/assets/js/changePasswordModal.js"></script>
 </body>
 
 </html>

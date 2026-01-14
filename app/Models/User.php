@@ -91,34 +91,110 @@ class User extends Database
     public function login($email, $password)
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM users WHERE email = ?"
+            "SELECT * FROM users WHERE email = ? LIMIT 1"
         );
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['password'])) {
-            return $user;
-        }
-        return false;
-    }
-    public function all($excludeUserId = null)
-    {
-        if ($excludeUserId) {
-            $stmt = $this->conn->prepare(
-                "SELECT id, name, email, isAdmin, isActive 
-             FROM users 
-             WHERE id != ?
-             ORDER BY id DESC"
-            );
-            $stmt->execute([$excludeUserId]);
-        } else {
-            $stmt = $this->conn->query(
-                "SELECT id, name, email, isAdmin, isActive 
-             FROM users 
-             ORDER BY id DESC"
-            );
+        if (!$user || !password_verify($password, $user['password'])) {
+            return false;
         }
 
+        if ((int)$user['isActive'] !== 1) {
+            return 'inactive';
+        }
+
+        return $user;
+    }
+
+    public function all($excludeUserId = null)
+    {
+        $sql = "
+        SELECT id, name, email, isAdmin, isActive
+        FROM users
+        WHERE isActive = 1
+    ";
+
+        $params = [];
+
+        if ($excludeUserId !== null) {
+            $sql .= " AND id != ?";
+            $params[] = $excludeUserId;
+        }
+
+        $sql .= " ORDER BY id DESC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateUser($id, $name, $email, $isAdmin)
+    {
+        try {
+            $stmt = $this->conn->prepare(
+                "UPDATE users 
+             SET name = ?, email = ?, isAdmin = ? 
+             WHERE id = ?"
+            );
+
+            return $stmt->execute([$name, $email, $isAdmin, $id]);
+        } catch (PDOException $e) {
+
+            if ($e->getCode() == 23000) {
+                return false;
+            }
+            throw $e;
+        }
+    }
+
+    public function softDelete($id)
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE users SET isActive = 0 WHERE id = ?"
+        );
+
+        return $stmt->execute([$id]);
+    }
+
+    public function allInactive()
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT id, name, email, isAdmin, isActive
+         FROM users
+         WHERE isActive = 0
+         ORDER BY id DESC"
+        );
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function activate($id)
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE users SET isActive = 1 WHERE id = ?"
+        );
+        return $stmt->execute([$id]);
+    }
+
+    public function findById($id)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT id, name, email, isAdmin, isActive 
+             FROM users 
+             WHERE id = ?"
+        );
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updatePassword($userId, $hashedPassword)
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE users SET password = ? WHERE id = ?"
+        );
+        return $stmt->execute([$hashedPassword, $userId]);
     }
 }

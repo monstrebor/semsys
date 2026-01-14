@@ -8,7 +8,7 @@
 
         <div class="ms-auto">
             <?php if (isset($_SESSION['user'])): ?>
-                <a href="#" class="btn btn-outline-secondary me-2">
+                <a href="index.php?url=profile" class="btn btn-outline-secondary me-2">
                     Profile
                 </a>
                 <a href="index.php?url=logout" class="btn btn-danger">

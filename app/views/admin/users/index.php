@@ -51,18 +51,39 @@
                                             <span class="badge bg-success">Active</span>
                                         </td>
                                         <td class="text-end">
-                                            <button class="btn btn-sm btn-outline-secondary">Edit</button>
-                                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                            <button
+                                                class="btn btn-sm btn-outline-secondary btn-edit"
+                                                data-id="<?= $user['id'] ?>"
+                                                data-name="<?= htmlspecialchars($user['name'], ENT_QUOTES) ?>"
+                                                data-email="<?= htmlspecialchars($user['email'], ENT_QUOTES) ?>"
+                                                data-role="<?= $user['isAdmin'] ?>">
+                                                Edit
+                                            </button>
+                                            <form method="POST"
+                                                action="index.php?url=admin-users-delete"
+                                                class="d-inline"
+                                                onsubmit="return confirm('Deactivate this user?');">
+
+                                                <input type="hidden" name="id" value="<?= $user['id'] ?>">
+
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    Deactivate
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
-
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <hr class="my-5">
+
+            <h4 class="mb-3 text-muted">Deactivated Accounts</h4>
+            <?php require_once __DIR__ . '/deactivated-accounts.php'; ?>
         </div>
     </main>
     <?php require_once __DIR__ . '/create-user-modal.php'; ?>
+    <?php require_once __DIR__ . '/edit-user-modal.php'; ?>
 </div>

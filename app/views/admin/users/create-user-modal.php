@@ -13,27 +13,27 @@
                     <div class="mb-3">
                         <label class="form-label">Full Name</label>
                         <input type="text"
-                               name="name"
-                               class="form-control"
-                               placeholder="Enter full name"
-                               required>
+                            name="name"
+                            class="form-control"
+                            placeholder="Enter full name"
+                            required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Email Address</label>
                         <input type="email"
-                               name="email"
-                               class="form-control"
-                               placeholder="user@example.com"
-                               required>
+                            name="email"
+                            class="form-control"
+                            placeholder="user@example.com"
+                            required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Role</label>
                         <select name="role" class="form-select" required>
                             <option value="">Select role</option>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
+                            <option value="1">Admin</option>
+                            <option value="0">User</option>
                         </select>
                     </div>
 
@@ -45,8 +45,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button type="submit" class="btn btn-primary">
