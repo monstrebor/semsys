@@ -3,6 +3,10 @@ require_once "../app/Core/Database.php";
 
 class User extends Database
 {
+    public function __construct()
+    {
+        $this->conn = Database::getInstance()->getConnection();
+    }
     public function registerWithoutPassword($name, $email, $token)
     {
         try {

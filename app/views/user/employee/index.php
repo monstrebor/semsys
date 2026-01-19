@@ -1,14 +1,11 @@
 <div class="d-flex min-vh-100">
 
-    <?php require_once __DIR__ . '/partials/sidebar.php'; ?>
+    <?php require_once __DIR__ . '/../partials/sidebar.php'; ?>
 
     <main class="flex-grow-1 bg-light p-4">
         <div class="container-fluid">
-            <div class="alert alert-success">
-                ✅ Login successful! Welcome <?= $_SESSION['user']['name']; ?>
-            </div>
 
-            <h2 class="mb-4">Dashboard</h2>
+            <h2 class="mb-4">Employee Portal</h2>
 
             <div class="row">
                 <div class="col-md-4 mb-3">

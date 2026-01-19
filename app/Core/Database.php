@@ -2,23 +2,52 @@
 
 class Database
 {
-    private $host = "localhost";
-    private $db   = "semsys";
-    private $user = "root";
-    private $pass = "";
+    private static $instance = null;
     protected $conn;
 
-    public function __construct()
+    private function __construct()
     {
-        try {
-            $this->conn = new PDO(
-                "mysql:host={$this->host};dbname={$this->db}",
-                $this->user,
-                $this->pass
-            );
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("DB Error: " . $e->getMessage());
+        $this->conn = new PDO(
+            "mysql:host=localhost;dbname=semsys",
+            "root",
+            "",
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]
+        );
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
+        return self::$instance;
+    }
+
+    public function getConnection()
+    {
+        return $this->conn;
+    }
+
+    public function begin()
+    {
+        $this->conn->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->conn->commit();
+    }
+
+    public function rollback()
+    {
+        $this->conn->rollBack();
+    }
+
+    public function lastInsertId()
+    {
+        return $this->conn->lastInsertId();
     }
 }

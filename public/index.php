@@ -9,7 +9,9 @@ require_once "../app/Core/Auth.php";
 require_once "../app/Controllers/AuthController.php";
 require_once "../app/Controllers/DashboardController.php";
 require_once "../app/Controllers/AdminController.php";
+require_once "../app/Controllers/EmployeeController.php";
 require_once "../app/Controllers/ProfileController.php";
+require_once "../app/Controllers/EmployeePortalController.php";
 
 $url = $_GET['url'] ?? 'home';
 
@@ -90,13 +92,25 @@ switch ($url) {
     case 'admin-users-activate':
         (new AdminController)->activate();
         break;
-    
+
     case 'profile':
         (new ProfileController)->index();
         break;
 
     case 'profile-save-password':
         (new ProfileController)->savePassword();
+        break;
+
+    case 'employee-index':
+        (new EmployeeController)->index();
+        break;
+
+    case 'admin-employees-create':
+        (new EmployeeController)->create();
+        break;
+
+    case 'employee-portal':
+        (new EmployeePortalController)->index();
         break;
 
     default:

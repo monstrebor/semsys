@@ -10,13 +10,7 @@
             <a href="index.php?url=dashboard" class="nav-link text-white">🏠 Dashboard</a>
         </li>
         <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">📚 Students</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a href="index.php?url=employee-index" class="nav-link text-white">👥 Employees</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a href="index.php?url=user-index" class="nav-link text-white">🛠 Users</a>
+            <a href="index.php?url=employee-portal" class="nav-link text-white">👥 Employee Portal</a>
         </li>
     </ul>
 </nav>

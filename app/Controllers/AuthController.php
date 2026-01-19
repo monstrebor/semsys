@@ -1,9 +1,7 @@
 <?php
 
-//models
 require_once "../app/Models/User.php";
 
-//classes
 require_once "../app/Core/Controller.php";
 require_once "../app/Core/Validator.php";
 require_once "../app/Core/Helpers.php";
