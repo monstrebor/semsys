@@ -85,4 +85,96 @@ class EmployeeController extends Controller
         header("Location: index.php?url=employee-index");
         exit;
     }
+
+    public function viewEmployee()
+    {
+        Auth::requireAdmin();
+
+        if (!isset($_GET['id'])) {
+            header("Location: index.php?url=employee-index");
+            exit;
+        }
+
+        $userId = (int) $_GET['id'];
+
+        $employeeModel = new EmployeeProfile();
+        $employee = $employeeModel->findFullProfileByUserId($userId);
+
+        if (!$employee) {
+            $_SESSION['error'] = "Employee not found.";
+            header("Location: index.php?url=employee-index");
+            exit;
+        }
+
+        $this->view('admin/employee/show-employee', [
+            'title'    => 'Employee Profile | SEMSYS',
+            'employee' => $employee
+        ]);
+    }
+
+    public function editEmployee()
+    {
+        Auth::requireAdmin();
+
+        if (!isset($_GET['id'])) {
+            header("Location: index.php?url=employee-index");
+            exit;
+        }
+
+        $userId = (int) $_GET['id'];
+        $employeeModel = new EmployeeProfile();
+
+        $employee = $employeeModel->findFullProfileByUserId($userId);
+
+        if (!$employee || !$employee['employee_profile_id']) {
+            $_SESSION['error'] = "Employee profile not found for this user.";
+            header("Location: index.php?url=employee-index");
+            exit;
+        }
+
+        $this->view('admin/employee/edit-employee', [
+            'title' => 'Edit Employee | SEMSYS',
+            'employee' => $employee
+        ]);
+    }
+
+    public function updateEmployee()
+    {
+        Auth::requireAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_GET['id'])) {
+            header("Location: index.php?url=employee-index");
+            exit;
+        }
+
+        $userId = (int) $_GET['id'];
+        $employeeModel = new EmployeeProfile();
+
+        try {
+            $employeeModel->begin();
+
+            $updated = $employeeModel->updateProfile($userId, [
+                'employee_id'       => $_POST['employee_id'],
+                'employee_type'     => $_POST['employee_type'],
+                'department'        => $_POST['department'],
+                'position'          => $_POST['position'],
+                'campus'            => $_POST['campus'],
+                'employment_status' => $_POST['employment_status'],
+                'date_hired'        => $_POST['date_hired'] ?: date('Y-m-d'),
+            ]);
+
+            if (!$updated) {
+                throw new Exception("Failed to update employee profile. Make sure the profile exists.");
+            }
+
+            $employeeModel->commit();
+            $_SESSION['success'] = "Employee profile updated successfully.";
+        } catch (Exception $e) {
+            $employeeModel->rollback();
+            $_SESSION['error'] = $e->getMessage();
+        }
+
+        header("Location: index.php?url=admin-employees-edit&id=$userId");
+        exit;
+    }
 }

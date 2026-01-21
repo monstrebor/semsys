@@ -1,10 +1,6 @@
 <div class="card shadow-sm border-0">
     <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Employee List</h5>
-
-        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createEmployeeModal">
-            + Add Employee
-        </button>
     </div>
 
     <div class="card-body p-0">
@@ -57,12 +53,12 @@
                                 <td><?= date('M d, Y', strtotime($emp['date_hired'])) ?></td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <a href="index.php?url=admin-employees-view&id=<?= $emp['id'] ?>"
-                                           class="btn btn-outline-primary">
+                                        <a href="index.php?url=admin-employees-view&id=<?= $emp['user_id'] ?>"
+                                            class="btn btn-outline-primary">
                                             View
                                         </a>
-                                        <a href="index.php?url=admin-employees-edit&id=<?= $emp['id'] ?>"
-                                           class="btn btn-outline-secondary">
+                                        <a href="index.php?url=admin-employees-edit&id=<?= $emp['user_id'] ?>"
+                                            class="btn btn-outline-secondary">
                                             Edit
                                         </a>
                                     </div>

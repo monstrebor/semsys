@@ -10,7 +10,6 @@
             <form method="POST" action="index.php?url=admin-employees-create">
                 <div class="modal-body">
 
-                    <!-- ACCOUNT INFO -->
                     <h6 class="text-muted mb-3">Account Information</h6>
 
                     <div class="mb-3">
@@ -23,7 +22,6 @@
                         <input type="email" name="email" class="form-control" required>
                     </div>
 
-                    <!-- EMPLOYEE INFO -->
                     <hr>
                     <h6 class="text-muted mb-3">Employee Information</h6>
 
@@ -80,13 +78,16 @@
                                 <option value="registrar">Novaliches</option>
                             </select>
                         </div>
-
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Date Hired</label>
-                            <input type="date" name="date_hired" class="form-control" required>
+                            <input
+                                type="date"
+                                name="date_hired"
+                                class="form-control"
+                                value="<?= isset($employee['date_hired']) ? htmlspecialchars($employee['date_hired']) : date('Y-m-d') ?>"
+                                required>
                         </div>
                     </div>
-
                     <div class="alert alert-info small mb-0">
                         🔐 A system-generated password will be sent to the employee's email.
                     </div>

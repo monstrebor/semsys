@@ -109,6 +109,18 @@ switch ($url) {
         (new EmployeeController)->create();
         break;
 
+    case 'admin-employees-view':
+        (new EmployeeController)->viewEmployee();
+        break;
+
+    case 'admin-employees-edit':
+        (new EmployeeController)->editEmployee();
+        break;
+
+    case 'admin-employees-update':
+        (new EmployeeController)->updateEmployee();
+        break;
+
     case 'employee-portal':
         (new EmployeePortalController)->index();
         break;
