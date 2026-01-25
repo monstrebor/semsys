@@ -27,7 +27,27 @@ class ProfileController extends Controller
         ]);
     }
 
-        public function savePassword()
+    public function employeeProfile()
+    {
+        Auth::requireLogin();
+
+        $userId = $_SESSION['user']['id'] ?? null;
+
+        if (!$userId) {
+            header("Location: index.php?url=login");
+            exit;
+        }
+
+        $userModel = new User();
+        $user = $userModel->findById($userId);
+
+        $this->view('user/employee/profile/profile', [
+            'title' => 'My Profile | SEMSYS',
+            'user'  => $user
+        ]);
+    }
+
+    public function savePassword()
     {
         Auth::requireLogin();
 

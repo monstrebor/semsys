@@ -13,9 +13,11 @@
                 </div>
 
                 <div class="d-flex gap-2">
-                    <a href="#" class="btn btn-outline-primary btn-sm">📄 View Payslips</a>
-                    <a href="#" class="btn btn-outline-success btn-sm">📝 Request Leave</a>
-                    <a href="index.php?url=profile" class="btn btn-outline-secondary btn-sm">⚙️ Edit Profile</a>
+                    <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#viewPayslipsModal">📄 View Payslips</a>
+                    <a href="#" class="btn btn-outline-success btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#requestLeaveModal">📝 Request Leave</a>
+                    <a href="index.php?url=employer-profile" class="btn btn-outline-secondary btn-sm">⚙️ Edit Profile</a>
                 </div>
             </div>
 
@@ -82,7 +84,7 @@
                         <div class="card-body">
                             <h5>📝 Leave Requests</h5>
                             <p class="text-muted">Apply & track leave</p>
-                            <a href="#" class="btn btn-outline-primary btn-sm">Request Leave</a>
+                            <a href="#" class="btn btn-outline-primary btn-sm" data-bs-target="#requestLeaveModal" data-bs-toggle="modal">Request Leave</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +94,7 @@
                         <div class="card-body">
                             <h5>💰 Payslips</h5>
                             <p class="text-muted">Salary history</p>
-                            <a href="#" class="btn btn-outline-success btn-sm">View Payslips</a>
+                            <a href="#" class="btn btn-outline-success btn-sm" data-bs-target="#viewPayslipsModal" data-bs-toggle="modal">View Payslips</a>
                         </div>
                     </div>
                 </div>
@@ -133,4 +135,6 @@
 
         </div>
     </main>
+    <?php require_once __DIR__ . '/view-payslips-modal.php'; ?>
+    <?php require_once __DIR__ . '/request-leave-modal.php'; ?>
 </div>

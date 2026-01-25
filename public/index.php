@@ -97,6 +97,10 @@ switch ($url) {
         (new ProfileController)->index();
         break;
 
+    case 'employer-profile':
+        (new ProfileController)->employeeProfile();
+        break;
+
     case 'profile-save-password':
         (new ProfileController)->savePassword();
         break;
