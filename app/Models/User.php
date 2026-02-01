@@ -201,4 +201,22 @@ class User extends Database
         );
         return $stmt->execute([$hashedPassword, $userId]);
     }
+
+    public function update($id, array $data)
+    {
+        $fields = [];
+        $params = [];
+
+        foreach ($data as $key => $value) {
+            $fields[] = "$key = ?";
+            $params[] = $value;
+        }
+
+        $params[] = $id;
+
+        $sql = "UPDATE users SET " . implode(', ', $fields) . " WHERE id = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($params);
+    }
 }

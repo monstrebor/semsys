@@ -106,8 +106,9 @@ class EmployeeProfile extends Database
             date_hired = ?
         WHERE user_id = ?
     ");
+    
 
-        $stmt->execute([
+        return $stmt->execute([
             $data['employee_id'],
             $data['employee_type'],
             $data['department'],
@@ -117,7 +118,5 @@ class EmployeeProfile extends Database
             $data['date_hired'],
             $userId
         ]);
-
-        return $stmt->rowCount() > 0;
     }
 }

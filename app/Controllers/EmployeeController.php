@@ -149,11 +149,16 @@ class EmployeeController extends Controller
 
         $userId = (int) $_GET['id'];
         $employeeModel = new EmployeeProfile();
+        $userModel = new User();
 
         try {
             $employeeModel->begin();
 
-            $updated = $employeeModel->updateProfile($userId, [
+            if (!$employeeModel->findByUserId($userId)) {
+                throw new Exception("Employee profile does not exist.");
+            }
+
+            $employeeModel->updateProfile($userId, [
                 'employee_id'       => $_POST['employee_id'],
                 'employee_type'     => $_POST['employee_type'],
                 'department'        => $_POST['department'],
@@ -163,9 +168,10 @@ class EmployeeController extends Controller
                 'date_hired'        => $_POST['date_hired'] ?: date('Y-m-d'),
             ]);
 
-            if (!$updated) {
-                throw new Exception("Failed to update employee profile. Make sure the profile exists.");
-            }
+            $userModel->update($userId, [
+                'name'  => $_POST['name'],
+                'email' => $_POST['email']
+            ]);
 
             $employeeModel->commit();
             $_SESSION['success'] = "Employee profile updated successfully.";
