@@ -7,21 +7,30 @@
     <title><?= $title ?? "SEMS | Student & Employee Management System" ?></title>
     <link rel="stylesheet" href="/semsys/public/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/semsys/public/assets/css/styles.css">
+    <link rel="stylesheet" href="/semsys/public/assets/css/app.css">
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
-    <?php require_once __DIR__ . '/navbar.php'; ?>
+    <?php
+    $url = $_GET['url'] ?? '';
+    $publicPages = ['home', 'login', 'register'];
+    ?>
+    <?php if (in_array($url, $publicPages)) : ?>
+        <?php require_once __DIR__ . '/navbar.php'; ?>
+        <main>
+            <?= $content ?? '' ?>
+        </main>
+    <?php else : ?>
+        <?php require_once __DIR__ . '/partials/navbar.php'; ?>
+        <div class="d-flex">
+            <?php require_once __DIR__ . '/partials/sidebar.php'; ?>
+            <main class="flex-grow-1 bg-light p-4" style="min-height: 100vh;">
+                <?= $content ?? '' ?>
+            </main>
+        </div>
+    <?php endif; ?>
 
-    <!-- MAIN CONTENT -->
-    <main>
-        <?php
-        if (isset($content)) {
-            echo $content;
-        }
-        ?>
-    </main>
 
     <script src="/semsys/public/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/semsys/public/assets/js/scripts.js"></script>
