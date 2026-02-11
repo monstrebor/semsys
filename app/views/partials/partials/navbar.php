@@ -87,7 +87,8 @@ RESPONSIVE (navbar only)
       aria-expanded="false"
       aria-label="Toggle menu">☰ </button></div>
   <div class="top-actions" role="navigation" aria-label="Top actions">
-    <div class="realtime" id="realtimeClock" aria-live="polite">--:-- </div><button class="icon-btn" title="Profile" aria-label="Profile"><svg width="18"
+    <div class="realtime" id="realtimeClock" aria-live="polite">--:-- </div>
+    <button class="icon-btn" title="Profile" aria-label="Profile"><svg width="18"
         height="18"
         viewBox="0 0 24 24"
         fill="none"
@@ -105,21 +106,5 @@ RESPONSIVE (navbar only)
   </div>
 </header>
 <script>
-  (function() {
-    function updateClock() {
-      const el = document.getElementById("realtimeClock");
-      if (!el) return;
 
-      const now = new Date();
-
-      el.textContent = now.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-    }
-
-    updateClock();
-    setInterval(updateClock, 1000);
-  })();
 </script>

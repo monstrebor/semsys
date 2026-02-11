@@ -1,23 +1,29 @@
-<section class="hero-section d-flex align-items-center justify-content-center min-vh-100">
-    <div class="container text-center text-white">
+<section class="home-bg">
+    <div class="home-card text-center">
 
-        <?php require_once __DIR__ . '/partials/notif.php'; ?>
+        <div class="school-logo"></div>
 
-        <h1 class="display-5 fw-bold mb-3">
-            Student and Employee<br>Management System
-        </h1>
+        <h1 class="title">SEMSYS</h1>
+        <p class="subtitle">School Event Management System</p>
 
-        <p class="lead mb-4">
-            A simple, secure, and efficient way to manage students and employees in one platform.
+        <div class="divider"></div>
+
+        <p class="description">
+            Manage school events, registrations, and announcements
+            in one modern and centralized platform.
         </p>
 
-        <div>
-            <a href="index.php?url=register" class="btn btn-outline-light btn-lg px-4 me-2">
-                Get Started
-            </a>
-            <a href="index.php?url=login" class="btn btn-outline-light btn-lg px-4">
+        <div class="d-grid gap-3 mt-4">
+            <a href="index.php?url=login" class="btn btn-primary btn-lg custom-btn">
                 Login
             </a>
+
+            <a href="index.php?url=register" class="btn btn-outline-light btn-lg custom-btn">
+                Register
+            </a>
         </div>
+
+        <p class="footer-text mt-4">© 2026 Bestlink College of the Philippines</p>
+
     </div>
 </section>

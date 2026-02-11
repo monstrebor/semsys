@@ -26,4 +26,29 @@ class EmployeePortalController extends Controller
             'employee' => $employee
         ]);
     }
+
+    public function employeeModule()
+    {
+        Auth::requireLogin();
+
+        $_SESSION['pageTitle'] = 'Employee Portal';
+
+        $contentFile = __DIR__ . '/../../Modules/employee-portal/index.php';
+
+        if (!file_exists($contentFile)) {
+            die("Employee portal index.php not found at: $contentFile");
+        }
+
+        ob_start();
+        include $contentFile;
+        $moduleContent = ob_get_clean();
+
+        $layoutFile = __DIR__ . '/../../Modules/employee-portal/partials/layout.php';
+
+        if (!file_exists($layoutFile)) {
+            die("Layout file not found at: $layoutFile");
+        }
+
+        include $layoutFile;
+    }
 }

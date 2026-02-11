@@ -7,16 +7,19 @@
 
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
-                <a href="index.php?url=dashboard" class="nav-link text-white">🏠 Dashboard</a>
+                <a href="index.php?url=dashboard" class="nav-link text-white">Dashboard</a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link text-white">📚 Students</a>
+                <a href="index.php?url=employee-module" class="nav-link text-white">Employee Module</a>
             </li>
             <li class="nav-item mb-2">
-                <a href="#" class="nav-link text-white">👥 Employees</a>
+                <a href="#" class="nav-link text-white">Students</a>
             </li>
             <li class="nav-item mb-2">
-                <a href="index.php?url=logout" class="nav-link text-white">🚪 Logout</a>
+                <a href="#" class="nav-link text-white">Employees</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="index.php?url=logout" class="nav-link text-white">Logout</a>
             </li>
         </ul>
     </nav>

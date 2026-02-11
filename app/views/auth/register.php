@@ -1,4 +1,4 @@
-<section class="min-vh-100 d-flex justify-content-center align-items-center bg-image1">
+<section class="min-vh-100 d-flex justify-content-center align-items-center home-bg">
     <div class="col-md-5 col-lg-4">
         <?php require_once __DIR__ . '/../partials/notif.php'; ?>
         <div class="card shadow border-0 rounded-4">

@@ -129,6 +129,10 @@ switch ($url) {
         (new EmployeePortalController)->index();
         break;
 
+    case 'employee-module':
+        (new EmployeePortalController)->employeeModule();
+        break;
+
     default:
         View::render("error", ['title' => '404 Not Found | SEMSYS']);
         break;

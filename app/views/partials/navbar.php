@@ -1,23 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
-    <div class="container">
-        <a href="index.php?url=home"
-           style="text-decoration: none; color: black; font-weight: bolder; display: flex; align-items: center; gap: 10px;">
-            <div class="icon1" style="width: 50px; height: 50px;"></div>
-            <div>SEMSYS</div>
+<nav class="top-navbar shadow-sm">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <a href="index.php?url=home" class="navbar-brand d-flex align-items-center gap-2">
+            <div class="icon1"></div>
+            <div class="brand-text">SEMSYS</div>
         </a>
 
-        <div class="ms-auto">
+        <div class="d-flex align-items-center gap-2">
             <?php if (isset($_SESSION['user'])): ?>
-                <a href="index.php?url=profile" class="btn btn-outline-secondary me-2">
+                <div class="realtime" id="realtimeClock" aria-live="polite">--:--</div>
+
+                <a href="index.php?url=profile" class="btn btn-outline-secondary nav-btn">
                     Profile
                 </a>
-                <a href="index.php?url=logout" class="btn btn-danger">
+                <a href="index.php?url=logout" class="btn btn-outline-danger nav-btn">
                     Logout
                 </a>
             <?php else: ?>
-                <a href="index.php?url=login" class="btn btn-outline-primary me-2">Login</a>
-                <a href="index.php?url=register" class="btn btn-primary">Register</a>
+                <a href="index.php?url=login" class="btn btn-primary nav-btn">
+                    Login
+                </a>
+                <a href="index.php?url=register" class="btn btn-primary nav-btn">
+                    Register
+                </a>
             <?php endif; ?>
         </div>
+
     </div>
 </nav>
