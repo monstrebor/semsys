@@ -33,6 +33,11 @@ class EmployeePortalController extends Controller
 
         $_SESSION['pageTitle'] = 'Employee Portal';
 
+        $userId = (int) $_SESSION['user']['id'];
+
+        $employeeModel = new EmployeeProfile();
+        $employee = $employeeModel->findFullProfileByUserId($userId);
+
         $contentFile = __DIR__ . '/../../Modules/employee-portal/index.php';
 
         if (!file_exists($contentFile)) {
@@ -40,7 +45,7 @@ class EmployeePortalController extends Controller
         }
 
         ob_start();
-        include $contentFile;
+        include $contentFile;    
         $moduleContent = ob_get_clean();
 
         $layoutFile = __DIR__ . '/../../Modules/employee-portal/partials/layout.php';
@@ -49,6 +54,6 @@ class EmployeePortalController extends Controller
             die("Layout file not found at: $layoutFile");
         }
 
-        include $layoutFile;
+        include $layoutFile; 
     }
 }
